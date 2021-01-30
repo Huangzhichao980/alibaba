@@ -51,8 +51,8 @@ class SingleValidate extends CommonValidate
         'login_ding_talk_other' => [
             'appid' => 'require|length:0,128',
             'redirect_uri' => 'require|length:0,255',
-            'state' => 'require|length:0,128',
-            'loginTmpCode' => 'require|length:0,128'
+            'loginTmpCode' => 'require|length:0,128',
+            'state',
         ],
         'getuserinfo_bycode' => [
             'accessKey' => 'require|length:0,128',

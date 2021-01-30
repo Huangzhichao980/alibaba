@@ -20,8 +20,9 @@ class Tools extends CommonTools
         'state' => '[state]',
         'appid' => '[appid]',
         'loginTmpCode' => '[loginTmpCode]',
-        'openid' => '[openid]',
-        'lang' => '[lang]'
+        'timestamp' => '[timestamp]',
+        'accessKey' => '[accessKey]',
+        'signature' => '[signature]'
     ];
 
     /**
