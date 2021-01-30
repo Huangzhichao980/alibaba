@@ -22,8 +22,12 @@ class Tools extends CommonTools
         'loginTmpCode' => '[loginTmpCode]',
         'timestamp' => '[timestamp]',
         'accessKey' => '[accessKey]',
-        'signature' => '[signature]'
+        'signature' => '[signature]',
+        'corpid' => '[corpid]',
+        'corpsecret' => '[corpsecret]'
     ];
+
+    protected static $needSignatureMethod = [];
 
     /**
      * 实例化
@@ -43,6 +47,11 @@ class Tools extends CommonTools
      * @return bool|mixed|string|string[]
      */
     public static function buildRequestResult($requestUrl,$requestParams,$requestWay,$isBackUrl=false,$method=''){
+        /*判断方法是否需要签名*/
+        if (in_array($method,self::$needSignatureMethod)){
+            $requestParams['signature'] = self::makeSignature($requestParams['suiteTicket'],$requestParams['accessSecret']);
+        }
+
         /*替换参数处理*/
         $replaceParams = [];
         $replaceValues = [];
@@ -96,16 +105,16 @@ class Tools extends CommonTools
 
     /**
      * 生成签名
-     * @param $requestParamsList
+     * @param $suiteTicket
+     * @param $accessSecret
      * @return string
      */
-    protected static function makeSignature($requestParamsList){
+    protected static function makeSignature($suiteTicket,$accessSecret){
         /*生成签名*/
-        $tmpString = time() ."\n".$requestParamsList['suiteTicket'];
-        $tmpArr = [$requestParamsList['token'],$requestParamsList['timestamp'],$requestParamsList['nonce']];
-        sort($tmpArr, SORT_STRING);
-        $signature = sha1(implode($tmpArr));
-
-        return $signature;
+        list($s1, $s2) = explode(' ', microtime());
+        $timestamp = (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000);
+        $result = $timestamp."\n".$suiteTicket;
+        $s = hash_hmac('sha256', $result, $accessSecret, true);
+        return base64_encode($s);
     }
 }

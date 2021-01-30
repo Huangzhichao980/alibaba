@@ -31,6 +31,12 @@ class DingTalkApi
             'request_uri' => '/get_jsapi_ticket'
         ],
 
+        /*获取微应用后台access_token*/
+        'get_sso_token' => [
+            'request_way' => 'GET',
+            'request_uri' => '/sso/gettoken?corpid=[corpid]&corpsecret=[corpsecret]'
+        ],
+
         /*使用钉钉提供的扫码登录页面1*/
         'login_ding_talk_page' => [
             'request_way' => 'GET',
