@@ -27,8 +27,6 @@ class Tools extends CommonTools
         'corpsecret' => '[corpsecret]'
     ];
 
-    protected static $needSignatureMethod = [];
-
     /**
      * 实例化
      * Tools constructor.
@@ -44,14 +42,10 @@ class Tools extends CommonTools
      * @param $requestWay
      * @param false $isBackUrl
      * @param string $method
+     * @param false $isSignature
      * @return bool|mixed|string|string[]
      */
-    public static function buildRequestResult($requestUrl,$requestParams,$requestWay,$isBackUrl=false,$method=''){
-        /*判断方法是否需要签名*/
-        if (in_array($method,self::$needSignatureMethod)){
-            $requestParams['signature'] = self::makeSignature($requestParams['suiteTicket'],$requestParams['accessSecret']);
-        }
-
+    public static function buildRequestResult($requestUrl, $requestParams, $requestWay, $isBackUrl=false){
         /*替换参数处理*/
         $replaceParams = [];
         $replaceValues = [];
@@ -95,7 +89,9 @@ class Tools extends CommonTools
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
         if ($requestWay == 'POST'){
             curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params,JSON_UNESCAPED_UNICODE));
+            $header = array("Content-Type: application/json; charset=utf-8", "Content-Length:".strlen(json_encode($params)));
+            curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
         }
         $data = curl_exec($ch);//运行curl
         curl_close($ch);

@@ -10,7 +10,7 @@ class DingTalkApi
         /*获取企业内部accesstoken*/
         'gettoken' => [
             'request_way' => 'GET',
-            'request_uri' => '/gettoken?appkey=[appkey]&appsecret=[appsecret]'
+            'request_uri' => '/gettoken?appkey=[appkey]&appsecret=[appsecret]',
         ],
 
         /*获取第三方应用的access_token*/
@@ -52,7 +52,7 @@ class DingTalkApi
         /*获取用户信息1*/
         'getuserinfo_bycode' => [
             'request_way' => 'POST',
-            'request_uri' => '/sns/getuserinfo_bycode?accessKey=[accessKey]&timestamp=[timestamp]&signature=[signature]'
+            'request_uri' => '/sns/getuserinfo_bycode?timestamp=[timestamp]&accessKey=[accessKey]&signature=[signature]'
         ],
     ];
 }

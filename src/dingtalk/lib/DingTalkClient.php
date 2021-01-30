@@ -36,7 +36,6 @@ class DingTalkClient extends DingTalkApi
      */
     protected static $bizParams = [];
 
-
     /**
      * 请求链接
      * @var string
@@ -132,6 +131,6 @@ class DingTalkClient extends DingTalkApi
         $originalRequestParamsList = array_merge(self::$options,self::$params,self::$bizParams);
         $requestParamsList = Tools::validate($originalRequestParamsList,new SingleValidate(),self::$method);
 
-        return Tools::buildRequestResult(self::$requestUrl,$requestParamsList,self::$methodList[self::$method]['request_way'],self::$isBackUrl,self::$method);
+        return Tools::buildRequestResult(self::$requestUrl,$requestParamsList,self::$methodList[self::$method]['request_way'],self::$isBackUrl);
     }
 }

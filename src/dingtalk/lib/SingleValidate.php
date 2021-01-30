@@ -26,7 +26,8 @@ class SingleValidate extends CommonValidate
         'timestamp|当前时间戳' => 'length:0,128',
         'tmp_auth_code|授权码tmp_auth_code' => 'length:0,128',
         'corpid|企业的corpid' => 'length:0,128',
-        'corpsecret|企业的corpsecret' => 'length:0,128'
+        'corpsecret|企业的corpsecret' => 'length:0,128',
+        'signature|签名signature' => 'length:0,128'
     ];
 
     public $scene = [
@@ -39,6 +40,7 @@ class SingleValidate extends CommonValidate
             'accessSecret' => 'require|length:0,128',
             'suiteTicket' => 'require|length:0,50',
             'auth_corpid' => 'require|length:0,128',
+            'signature' => 'require|length:0,128'
         ],
         'get_suite_token' => [
             'suite_key' => 'require|length:0,128',
@@ -67,8 +69,7 @@ class SingleValidate extends CommonValidate
             'accessKey' => 'require|length:0,128',
             'timestamp' => 'require|length:0,255',
             'tmp_auth_code' => 'require|length:0,128',
-            'suiteTicket' => 'require|length:0,128',
-            'accessSecret' => 'require|length:0,128',
+            'signature' => 'require|length:0,128'
         ]
     ];
 }
