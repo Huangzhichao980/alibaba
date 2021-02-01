@@ -24,7 +24,8 @@ class Tools extends CommonTools
         'accessKey' => '[accessKey]',
         'signature' => '[signature]',
         'corpid' => '[corpid]',
-        'corpsecret' => '[corpsecret]'
+        'corpsecret' => '[corpsecret]',
+        'sns_token' => '[sns_token]'
     ];
 
     /**

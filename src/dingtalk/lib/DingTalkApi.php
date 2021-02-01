@@ -54,5 +54,29 @@ class DingTalkApi
             'request_way' => 'POST',
             'request_uri' => '/sns/getuserinfo_bycode?timestamp=[timestamp]&accessKey=[accessKey]&signature=[signature]'
         ],
+
+        /*获取登录应用access_token*/
+        'get_login_token' => [
+            'request_way' => 'GET',
+            'request_uri' => '/sns/gettoken?appid=[appid]&appsecret=[appsecret]'
+        ],
+
+        /*获取登录应用persistent_code*/
+        'get_persistent_code' => [
+            'request_way' => 'POST',
+            'request_uri' => '/sns/get_persistent_code?access_token=[access_token]'
+        ],
+
+        /*获取登录应用sns_token*/
+        'get_sns_token' => [
+            'request_way' => 'POST',
+            'request_uri' => '/sns/get_sns_token?access_token=[access_token]'
+        ],
+
+        /*获取登录应用用户信息*/
+        'getuserinfo' => [
+            'request_way' => 'POST',
+            'request_uri' => '/sns/getuserinfo?sns_token=[sns_token]'
+        ],
     ];
 }
