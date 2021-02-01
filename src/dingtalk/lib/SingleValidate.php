@@ -27,7 +27,11 @@ class SingleValidate extends CommonValidate
         'tmp_auth_code|授权码tmp_auth_code' => 'length:0,128',
         'corpid|企业的corpid' => 'length:0,128',
         'corpsecret|企业的corpsecret' => 'length:0,128',
-        'signature|签名signature' => 'length:0,128'
+        'signature|签名signature' => 'length:0,128',
+        'appsecret|密钥appsecret' => 'length:0,128',
+        'persistent_code|扫码persistent_code' => 'length:0,128',
+        'openid|用户openid' => 'length:0,128',
+        'sns_token|用户信息获取sns_token' => 'length:0,128'
     ];
 
     public $scene = [
@@ -70,6 +74,22 @@ class SingleValidate extends CommonValidate
             'timestamp' => 'require|length:0,255',
             'tmp_auth_code' => 'require|length:0,128',
             'signature' => 'require|length:0,128'
+        ],
+        'get_login_token' => [
+            'appid' => 'require|length:0,128',
+            'appsecret' => 'require|length:0,255'
+        ],
+        'get_persistent_code' => [
+            'tmp_auth_code' => 'require|length:0,128',
+            'access_token' => 'require|length:0,255',
+        ],
+        'get_sns_token' => [
+            'openid' => 'require|length:0,128',
+            'access_token' => 'require|length:0,255',
+            'persistent_code' => 'require|length:0,128'
+        ],
+        'getuserinfo' => [
+            'sns_token' => 'require|length:0,255'
         ]
     ];
 }
