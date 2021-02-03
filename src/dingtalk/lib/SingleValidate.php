@@ -31,10 +31,24 @@ class SingleValidate extends CommonValidate
         'appsecret|密钥appsecret' => 'length:0,128',
         'persistent_code|扫码persistent_code' => 'length:0,128',
         'openid|用户openid' => 'length:0,128',
-        'sns_token|用户信息获取sns_token' => 'length:0,128'
+        'unionid|用户unionid' => 'length:0,50',
+        'userid|用户userid' => 'length:0,50',
+        'language|语言language设置' => 'in:zh_CN,en_US',
+        'sns_token|用户信息获取sns_token' => 'length:0,128',
+        'signature|签名' => 'length:0,128',
+        'nonce|随机字符串' => 'length:0,128',
+        'token|token' => 'length:0,128',
+        'encoding_ace_key|encoding_ace_key' => 'length:0,128',
     ];
 
     public $scene = [
+        'listen' => [
+            'signature' => 'require|length:0,128',
+            'timestamp' => 'require|length:0,128',
+            'nonce' => 'require|length:0,128',
+            'token' => 'require|length:0,128',
+            'encoding_ace_key' => 'require|length:0,128'
+        ],
         'gettoken' => [
             'appkey' => 'require|length:0,50',
             'appsecret' => 'require|length:0,128',
@@ -90,6 +104,15 @@ class SingleValidate extends CommonValidate
         ],
         'getuserinfo' => [
             'sns_token' => 'require|length:0,255'
-        ]
+        ],
+        'get_userinfo_by_unionid' => [
+            'access_token' => 'require|length:0,255',
+            'unionid' => 'require|length:0,128'
+        ],
+        'get_userinfo_by_userid' => [
+            'access_token' => 'require|length:0,255',
+            'userid' => 'require|length:0,128',
+            'language'
+        ],
     ];
 }

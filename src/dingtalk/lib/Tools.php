@@ -4,6 +4,7 @@
 namespace panthsoni\alibaba\dingtalk\lib;
 
 
+use panthsoni\alibaba\common\CommonCrypt;
 use panthsoni\alibaba\common\CommonTools;
 
 class Tools extends CommonTools
@@ -70,6 +71,24 @@ class Tools extends CommonTools
 
         /*curl请求*/
         return self::httpCurl($requestUrl,$requestWay,$requestParams);
+    }
+
+    public static function listen($params=[]){
+        /*获取post数据包*/
+        $postdata = file_get_contents("php://input");
+        $postList = json_decode($postdata,true);
+        $encrypt = $postList['encrypt'];
+
+        /*进行数据解密*/
+        $crypt = new CommonCrypt($params['token'], $params['encoding_ace_key'], $params['suite_key']);
+
+        $msg = "";
+        $errCode = $crypt->DecryptMsg($params['signature'], $params['timestamp'], $params['nonce'], $encrypt, $msg);
+        if ($errCode != 0){
+            return $errCode;
+        }
+
+        return $msg;
     }
 
     /**

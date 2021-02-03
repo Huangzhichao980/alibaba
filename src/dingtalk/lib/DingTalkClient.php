@@ -49,6 +49,12 @@ class DingTalkClient extends DingTalkApi
     protected static $isBackUrl = false;
 
     /**
+     * 不需要请求的接口方法
+     * @var array
+     */
+    protected static $notRequestUrlMethods = ['listen'];
+
+    /**
      * 初始化
      * DeveloperClient constructor.
      * @param array $options
@@ -120,16 +126,24 @@ class DingTalkClient extends DingTalkApi
         }
 
         /*检测请求方式是否存在*/
-        if (!isset(self::$methodList[self::$method]) || (isset(self::$methodList[self::$method]) && !self::$methodList[self::$method])){
-            throw new \Exception('请求方法未授权',-10025);
-        }
+        if (!in_array(self::$method,self::$notRequestUrlMethods)){
+            if (!isset(self::$methodList[self::$method]) || (isset(self::$methodList[self::$method]) && !self::$methodList[self::$method])){
+                throw new \Exception('请求方法未授权',-10025);
+            }
 
-        /*组建请求链接*/
-        self::$requestUrl = preg_match('/^http(s)?:\\/\\/.+/',self::$methodList[self::$method]['request_uri'])?self::$methodList[self::$method]['request_uri']:self::$domain.self::$methodList[self::$method]['request_uri'];
+            /*组建请求链接*/
+            self::$requestUrl = preg_match('/^http(s)?:\\/\\/.+/',self::$methodList[self::$method]['request_uri'])?self::$methodList[self::$method]['request_uri']:self::$domain.self::$methodList[self::$method]['request_uri'];
+        }
 
         /*参数验证*/
         $originalRequestParamsList = array_merge(self::$options,self::$params,self::$bizParams);
         $requestParamsList = Tools::validate($originalRequestParamsList,new SingleValidate(),self::$method);
+
+        /*监听方法*/
+        if (self::$method === 'listen') return Tools::listen($requestParamsList);
+
+        /*回复用户消息*/
+        if (self::$method === 'replyMessage') return Tools::replyMessage($originalRequestParamsList);
 
         return Tools::buildRequestResult(self::$requestUrl,$requestParamsList,self::$methodList[self::$method]['request_way'],self::$isBackUrl);
     }

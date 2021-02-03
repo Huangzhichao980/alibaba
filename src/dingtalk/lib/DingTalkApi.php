@@ -49,10 +49,22 @@ class DingTalkApi
             'request_uri' => '/connect/oauth2/sns_authorize?appid=[appid]&response_type=code&scope=snsapi_login&state=[state]&redirect_uri=[redirect_uri]&loginTmpCode=[loginTmpCode]'
         ],
 
-        /*获取用户信息1*/
+        /*通过code获取用户信息*/
         'getuserinfo_bycode' => [
             'request_way' => 'POST',
             'request_uri' => '/sns/getuserinfo_bycode?timestamp=[timestamp]&accessKey=[accessKey]&signature=[signature]'
+        ],
+
+        /*通过unionid获取用户信息*/
+        'get_userinfo_by_unionid' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/user/getbyunionid?access_token=[access_token]'
+        ],
+
+        /*通过unionid获取用户信息*/
+        'get_userinfo_by_userid' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/v2/user/get?access_token=[access_token]'
         ],
 
         /*获取登录应用access_token*/
