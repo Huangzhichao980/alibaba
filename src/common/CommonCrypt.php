@@ -28,11 +28,13 @@ class CommonCrypt
     protected static $m_token;
     protected static $m_encodingAesKey;
     protected static $m_suiteKey;
+    protected static $key;
 
     public function __construct($token, $encodingAesKey, $suiteKey){
         self::$m_token = $token;
         self::$m_encodingAesKey = $encodingAesKey;
         self::$m_suiteKey = $suiteKey;
+        self::$key = base64_decode($encodingAesKey.'=');
     }
 
     /**
@@ -62,12 +64,13 @@ class CommonCrypt
         }
         $signature = $array[1];
 
-        $encryptMsg = json_encode(array(
+        $encryptMsg = [
             "msg_signature" => $signature,
             "encrypt" => $encrypt,
             "timeStamp" => $timeStamp,
             "nonce" => $nonce
-        ));
+        ];
+
         return self::$OK;
     }
 
@@ -91,7 +94,6 @@ class CommonCrypt
 
         $array = self::getSHA1(self::$m_token, $timeStamp, $nonce, $encrypt);
         $ret = $array[0];
-
         if ($ret != 0) {
             return $ret;
         }
@@ -105,6 +107,7 @@ class CommonCrypt
         if ($result[0] != 0) {
             return $result[0];
         }
+
         $decryptMsg = $result[1];
 
         return self::$OK;
@@ -134,7 +137,7 @@ class CommonCrypt
      * @param $text
      * @return false|string
      */
-   protected static function decode($text){
+    protected static function decode($text){
         $pad = ord(substr($text, -1));
         if ($pad < 1 || $pad > self::$block_size) {
             $pad = 0;
@@ -154,16 +157,10 @@ class CommonCrypt
             $random = self::getRandomStr();
             $text = $random . pack("N", strlen($text)) . $text . $corpid;
             // 网络字节序
-            $size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-            $module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
-            $iv = substr(self::$m_encodingAesKey, 0, 16);
+            $iv = substr(self::$key, 0, 16);
             //使用自定义的填充方式对明文进行补位填充
             $text = self::encode($text);
-            mcrypt_generic_init($module, self::$m_encodingAesKey, $iv);
-            //加密
-            $encrypted = mcrypt_generic($module, $text);
-            mcrypt_generic_deinit($module);
-            mcrypt_module_close($module);
+            $encrypted = openssl_encrypt($text,'AES-256-CBC',self::$key,OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING,$iv);
 
             //print(base64_encode($encrypted));
             //使用BASE64对加密后的字符串进行编码
@@ -183,13 +180,9 @@ class CommonCrypt
     protected static function decrypt($encrypted, $corpid){
         try {
             $ciphertext_dec = base64_decode($encrypted);
-            $module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
-            $iv = substr(self::$m_encodingAesKey, 0, 16);
-            mcrypt_generic_init($module, self::$m_encodingAesKey, $iv);
-
-            $decrypted = mdecrypt_generic($module, $ciphertext_dec);
-            mcrypt_generic_deinit($module);
-            mcrypt_module_close($module);
+            $iv = substr(self::$key, 0, 16);
+            //使用BASE64对需要解密的字符串进行解码
+            $decrypted = openssl_decrypt($ciphertext_dec,'AES-256-CBC',self::$key,OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING,$iv);
         } catch (\Exception $e) {
             return array(self::$DecryptAESError, null);
         }
@@ -197,6 +190,7 @@ class CommonCrypt
         try {
             //去除补位字符
             $result = self::decode($decrypted);
+
             //去除16位随机字符串,网络字节序和AppId
             if (strlen($result) < 16)
                 return "";
@@ -209,6 +203,7 @@ class CommonCrypt
             print $e;
             return array(self::$DecryptAESError, null);
         }
+
         if ($from_corpid != $corpid)
             return array(self::$ValidateSuiteKeyError, null);
         return array(0, $xml_content);

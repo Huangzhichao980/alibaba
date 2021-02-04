@@ -73,22 +73,28 @@ class Tools extends CommonTools
         return self::httpCurl($requestUrl,$requestWay,$requestParams);
     }
 
+    /**
+     * 消息监听
+     * @param array $params
+     * @return array|int|mixed|string
+     */
     public static function listen($params=[]){
-        /*获取post数据包*/
-        $postdata = file_get_contents("php://input");
-        $postList = json_decode($postdata,true);
-        $encrypt = $postList['encrypt'];
-
         /*进行数据解密*/
-        $crypt = new CommonCrypt($params['token'], $params['encoding_ace_key'], $params['suite_key']);
-
         $msg = "";
-        $errCode = $crypt->DecryptMsg($params['signature'], $params['timestamp'], $params['nonce'], $encrypt, $msg);
+        $crypt = new CommonCrypt($params['token'], $params['encoding_ace_key'], $params['suite_key']);
+        $errCode = $crypt->DecryptMsg($params['signature'], $params['timestamp'], $params['nonce'], $params['encrypt'], $msg);
         if ($errCode != 0){
             return $errCode;
         }
 
-        return $msg;
+        /*判断消息类型*/
+        $result = '';
+        $errCode = $crypt->EncryptMsg('success',$params['timestamp'],$params['nonce'],$result);
+        if ($errCode != 0){
+            return $errCode;
+        }
+
+        return ['message' => json_decode($msg,true),'success' => $result];
     }
 
     /**

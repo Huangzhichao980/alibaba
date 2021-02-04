@@ -90,5 +90,23 @@ class DingTalkApi
             'request_way' => 'POST',
             'request_uri' => '/sns/getuserinfo?sns_token=[sns_token]'
         ],
+
+        /*使用模板发送工作通知消息*/
+        'sendbytemplate' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/message/corpconversation/sendbytemplate?access_token=[access_token]'
+        ],
+
+        /*发送工作通知*/
+        'asyncsend_v2' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/message/corpconversation/asyncsend_v2?access_token=[access_token]'
+        ],
+
+        /*更新工作通知状态栏*/
+        'status_bar_update' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/message/corpconversation/status_bar/update?access_token=[access_token]'
+        ],
     ];
 }

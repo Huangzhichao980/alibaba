@@ -39,6 +39,17 @@ class SingleValidate extends CommonValidate
         'nonce|随机字符串' => 'length:0,128',
         'token|token' => 'length:0,128',
         'encoding_ace_key|encoding_ace_key' => 'length:0,128',
+        'encrypt|加密信息' => 'length:0,10000',
+        'agent_id|应用的agent_id' => 'number',
+        'template_id|消息模板template_id' => 'length:0,255',
+        'userid_list|接收者用户userid列表userid_list' => 'length:0,5000',
+        'dept_id_list|接收者的部门id列表dept_id_list' => 'length:0,255',
+        'data|消息模板动态参数赋值数据data' => 'length:0,255',
+        'to_all_user|是否发送给企业全部用户to_all_user' => 'boolean',
+        'msg|消息内容json格式msg' => 'length:0,2048',
+        'task_id|工作通知任务ID的task_id' => 'number',
+        'status_value|状态栏值status_value' => 'length:0,128',
+        'status_bg|状态栏背景色，推荐0xFF加六位颜色值status_bg' => 'length:0,128',
     ];
 
     public $scene = [
@@ -47,7 +58,9 @@ class SingleValidate extends CommonValidate
             'timestamp' => 'require|length:0,128',
             'nonce' => 'require|length:0,128',
             'token' => 'require|length:0,128',
-            'encoding_ace_key' => 'require|length:0,128'
+            'encoding_ace_key' => 'require|length:0,128',
+            'suite_key' => 'require|length:0,128',
+            'encrypt' => 'require|length:0,10000'
         ],
         'gettoken' => [
             'appkey' => 'require|length:0,50',
@@ -113,6 +126,25 @@ class SingleValidate extends CommonValidate
             'access_token' => 'require|length:0,255',
             'userid' => 'require|length:0,128',
             'language'
+        ],
+        'sendbytemplate' => [
+            'access_token' => 'require|length:0,255',
+            'agent_id' => 'require|number',
+            'template_id' => 'require|length:0,255',
+            'userid_list','dept_id_list','data'
+        ],
+        'asyncsend_v2' => [
+            'access_token' => 'require|length:0,255',
+            'agent_id' => 'require|number',
+            'msg' => 'require|length:0,2048',
+            'userid_list','dept_id_list','to_all_user'
+        ],
+        'status_bar_update' => [
+            'access_token' => 'require|length:0,255',
+            'agent_id' => 'require|number',
+            'task_id' => 'require|number',
+            'status_value' => 'require|length:0,128',
+            'status_bg'
         ],
     ];
 }
