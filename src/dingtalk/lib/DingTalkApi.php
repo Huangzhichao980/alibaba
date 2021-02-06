@@ -87,7 +87,7 @@ class DingTalkApi
 
         /*获取登录应用用户信息*/
         'getuserinfo' => [
-            'request_way' => 'POST',
+            'request_way' => 'GET',
             'request_uri' => '/sns/getuserinfo?sns_token=[sns_token]'
         ],
 
