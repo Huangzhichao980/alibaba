@@ -1,7 +1,10 @@
 <?php
 namespace panthsoni\alibaba\pay\lib;
 
-class PayClient extends PayApi
+use panthsoni\alibaba\common\CommonApi;
+use panthsoni\alibaba\common\SingleValidate;
+
+class PayClient extends CommonApi
 {
     /**
      * 公众参数

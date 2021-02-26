@@ -1,7 +1,7 @@
 <?php
 namespace panthsoni\alibaba\sms;
 
-use panthsoni\alibaba\sms\lib\SingleValidate;
+use panthsoni\alibaba\common\SingleValidate;
 use panthsoni\alibaba\sms\lib\SmsClient;
 use panthsoni\alibaba\sms\lib\Tools;
 

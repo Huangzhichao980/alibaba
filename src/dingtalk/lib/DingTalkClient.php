@@ -4,7 +4,10 @@
 namespace panthsoni\alibaba\dingtalk\lib;
 
 
-class DingTalkClient extends DingTalkApi
+use panthsoni\alibaba\common\CommonApi;
+use panthsoni\alibaba\common\SingleValidate;
+
+class DingTalkClient extends CommonApi
 {
     /**
      * 微信请求网关

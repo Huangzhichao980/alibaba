@@ -1,7 +1,10 @@
 <?php
 namespace panthsoni\alibaba\top\lib;
 
-class TopClient extends TopApi
+use panthsoni\alibaba\common\CommonApi;
+use panthsoni\alibaba\common\SingleValidate;
+
+class TopClient extends CommonApi
 {
     /**
      * 公众参数
@@ -241,7 +244,7 @@ class TopClient extends TopApi
             if (!self::$secret){
                 throw new \Exception('secret缺失',-10039);
             }
-            $commonParams = Tools::validate(array_merge(self::$options,self::$params,self::$bizParams),new SingleValidate(),'common');
+            $commonParams = Tools::validate(array_merge(self::$options,self::$params,self::$bizParams),new SingleValidate(),'commonTaobao');
         }
 
         /*参数验证*/
