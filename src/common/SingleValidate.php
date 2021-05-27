@@ -201,6 +201,10 @@ class SingleValidate extends CommonValidate
         'page_no|第几页page_no'=>'number',
         'page_size|页大小page_size'=>'number',
         'user_id|卖家user_id'=>'number',
+        'dept_id|父部门ID' => 'number',
+        'language|通讯录语言' => 'in:zh_CN,en_US',
+        'size|分页大小' => 'between:20,200',
+        'offset|偏移量' => 'number'
     ];
 
     public $scene = [
@@ -247,11 +251,26 @@ class SingleValidate extends CommonValidate
             'loginTmpCode' => 'require|length:0,128',
             'state',
         ],
+        'getuserinfo_nologin' => [
+            'access_token' => 'require|length:0,128',
+            'code' => 'require|length:0,128',
+        ],
+        'getuserinfo_nologin2' => [
+            'access_token' => 'require|length:0,128',
+            'code' => 'require|length:0,128',
+        ],
+        'get_manager_info' => [
+            'access_token' => 'require|length:0,128',
+            'code' => 'require|length:0,128',
+        ],
         'getuserinfo_bycode' => [
             'accessKey' => 'require|length:0,128',
             'timestamp' => 'require|length:0,255',
             'tmp_auth_code' => 'require|length:0,128',
             'signature' => 'require|length:0,128'
+        ],
+        'get_address_book_permissions' => [
+            'access_token' => 'require|length:0,128',
         ],
         'get_login_token' => [
             'appid' => 'require|length:0,128',
@@ -268,6 +287,14 @@ class SingleValidate extends CommonValidate
         ],
         'getuserinfo' => [
             'sns_token' => 'require|length:0,255'
+        ],
+        'get_department_list' => [
+            'access_token' => 'require|length:0,255',
+            'dept_id','language'
+        ],
+        'get_role_list' => [
+            'access_token' => 'require|length:0,255',
+            'size','offset'
         ],
         'get_userinfo_by_unionid' => [
             'access_token' => 'require|length:0,255',

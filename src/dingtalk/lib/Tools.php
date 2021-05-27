@@ -26,7 +26,8 @@ class Tools extends CommonTools
         'signature' => '[signature]',
         'corpid' => '[corpid]',
         'corpsecret' => '[corpsecret]',
-        'sns_token' => '[sns_token]'
+        'sns_token' => '[sns_token]',
+        'code' => '[code]'
     ];
 
     /**

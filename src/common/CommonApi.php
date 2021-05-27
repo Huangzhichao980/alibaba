@@ -22,7 +22,7 @@ class CommonApi
             'request_uri' => '/service/get_corp_token'
         ],
 
-        /*获取第三方应用的suite_ticket*/
+        /*获取第三方企业应用的suite_access_token*/
         'get_suite_token' => [
             'request_way' => 'POST',
             'request_uri' => '/service/get_suite_token'
@@ -31,10 +31,10 @@ class CommonApi
         /*获取jsapi_ticket*/
         'get_jsapi_ticket' => [
             'request_way' => 'GET',
-            'request_uri' => '/get_jsapi_ticket'
+            'request_uri' => '/get_jsapi_ticket?access_token=[access_token]'
         ],
 
-        /*获取微应用后台access_token*/
+        /*获取微应用后台免登的access_token*/
         'get_sso_token' => [
             'request_way' => 'GET',
             'request_uri' => '/sso/gettoken?corpid=[corpid]&corpsecret=[corpsecret]'
@@ -52,10 +52,34 @@ class CommonApi
             'request_uri' => '/connect/oauth2/sns_authorize?appid=[appid]&response_type=code&scope=snsapi_login&state=[state]&redirect_uri=[redirect_uri]&loginTmpCode=[loginTmpCode]'
         ],
 
-        /*通过code获取用户信息*/
+        /*通过免登码获取用户信息*/
+        'getuserinfo_nologin' => [
+            'request_way' => 'GET',
+            'request_uri' => '/user/getuserinfo?access_token=[access_token]&code=[code]'
+        ],
+
+        /*通过免登码获取用户信息(v2)*/
+        'getuserinfo_nologin2' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/v2/user/getuserinfo'
+        ],
+
+        /*获取应用管理员的身份信息*/
+        'get_manager_info' => [
+            'request_way' => 'GET',
+            'request_uri' => '/sso/getuserinfo?code=[code]&access_token=[access_token]'
+        ],
+
+        /*根据sns临时授权码获取用户信息*/
         'getuserinfo_bycode' => [
             'request_way' => 'POST',
             'request_uri' => '/sns/getuserinfo_bycode?timestamp=[timestamp]&accessKey=[accessKey]&signature=[signature]'
+        ],
+
+        /*获取通讯录权限范围*/
+        'get_address_book_permissions' => [
+            'request_way' => 'GET',
+            'request_uri' => '/auth/scopes?access_token=[access_token]'
         ],
 
         /*通过unionid获取用户信息*/
@@ -92,6 +116,18 @@ class CommonApi
         'getuserinfo' => [
             'request_way' => 'GET',
             'request_uri' => '/sns/getuserinfo?sns_token=[sns_token]'
+        ],
+
+        /*获取部门列表*/
+        'get_department_list' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/v2/department/listsub'
+        ],
+
+        /*获取角色列表*/
+        'get_role_list' => [
+            'request_way' => 'POST',
+            'request_uri' => '/topapi/v2/department/listsub'
         ],
 
         /*使用模板发送工作通知消息*/
