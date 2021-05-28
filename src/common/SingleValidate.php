@@ -204,7 +204,10 @@ class SingleValidate extends CommonValidate
         'dept_id|父部门ID' => 'number',
         'language|通讯录语言' => 'in:zh_CN,en_US',
         'size|分页大小' => 'between:20,200',
-        'offset|偏移量' => 'number'
+        'offset|偏移量' => 'number',
+        'fetch_child|是否递归部门的全部子部门' => 'boolean',
+        'lang|通讯录语言' => 'in:zh_CN,en_US',
+        'id|父部门ID' => 'number',
     ];
 
     public $scene = [

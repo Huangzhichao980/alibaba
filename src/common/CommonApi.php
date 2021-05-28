@@ -121,13 +121,13 @@ class CommonApi
         /*获取部门列表*/
         'get_department_list' => [
             'request_way' => 'POST',
-            'request_uri' => '/topapi/v2/department/listsub'
+            'request_uri' => '/topapi/v2/department/listsub?access_token=[access_token]'
         ],
 
         /*获取角色列表*/
         'get_role_list' => [
             'request_way' => 'POST',
-            'request_uri' => '/topapi/v2/department/listsub'
+            'request_uri' => '/topapi/role/list?access_token=[access_token]'
         ],
 
         /*使用模板发送工作通知消息*/
