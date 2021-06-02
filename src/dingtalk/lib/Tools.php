@@ -114,7 +114,7 @@ class Tools extends CommonTools
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);//设置header
         curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-        if ($requestWay == 'POST'){
+        if ($requestWay == 'POST' && !empty($params)){
             curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
             $header = array("Content-Type: application/json; charset=utf-8", "Content-Length:".strlen(json_encode($params)));
             curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
